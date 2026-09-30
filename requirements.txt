@@ -1,0 +1,6 @@
+nilearn>=0.10
+numpy
+pandas
+scikit-learn>=1.3
+matplotlib
+torch
