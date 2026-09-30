@@ -66,7 +66,24 @@ Best model per feature set (5-fold CV). "Site" columns hold out whole acquisitio
 `make_report.py` from `results/results.csv`; every model and CV scheme is in that file.
 
 <!-- RESULTS START -->
-Run `python run_experiments.py` and then `python make_report.py` to fill this table.
+| Features | Model | Acc | F1 | AUC | Site acc | Site AUC |
+|---|---|---|---|---|---|---|
+| demo | Logistic regression | 0.532 ± 0.017 | 0.476 | 0.532 ± 0.047 | 0.481 | 0.499 |
+| range | RBF SVM | 0.583 ± 0.027 | 0.547 | 0.620 ± 0.025 | 0.569 | 0.602 |
+| range+demo | Logistic regression | 0.563 ± 0.022 | 0.537 | 0.594 ± 0.029 | 0.569 | 0.596 |
+| correlation | Linear SVM | 0.668 ± 0.017 | 0.648 | 0.733 ± 0.020 | 0.673 | 0.737 |
+| correlation+demo | Linear SVM | 0.667 ± 0.017 | 0.646 | 0.733 ± 0.020 | 0.673 | 0.737 |
+| tangent | Linear SVM | 0.677 ± 0.023 | 0.660 | 0.740 ± 0.025 | 0.674 | 0.743 |
+| tangent+demo | Linear SVM | 0.675 ± 0.021 | 0.658 | 0.740 ± 0.024 | 0.664 | 0.741 |
+| timeseries | 1D CNN | 0.634 ± 0.028 | 0.613 | 0.705 ± 0.040 | 0.643 | 0.695 |
+| none (dummy) | Dummy (majority) | 0.537 ± 0.003 | 0.000 | 0.500 ± 0.000 | 0.537 | 0.500 |
+
+- Best model: tangent+demo features with Linear SVM, accuracy 0.675 ± 0.021 and ROC AUC 0.740 ± 0.024 (stratified 5-fold CV), against 0.537 accuracy and AUC 0.5 for always guessing the majority class. Out of fold it caught 273/403 autism cases (sensitivity 0.68) and 315/468 controls (specificity 0.67).
+- Paper reproduction: range features + demographics with logistic regression gave accuracy 0.563 (AUC 0.594); range features alone gave 0.583 (AUC 0.597). The paper reported 0.713 with age and 0.538 without on NCANDA (different task, so not directly comparable).
+- Better features: correlation connectivity beats the paper's range features (best AUC 0.733 vs 0.620).
+- Age ablation: demographics alone reach AUC 0.532; tangent brain features alone reach 0.740 and 0.740 with demographics added. Unlike the paper, the prediction is carried by the brain features, not by age.
+- Site effect: holding out whole sites moves the best model's AUC from 0.740 to 0.741 (+0.001). The model transfers to unseen scanners.
+- Deep learning: the 1D CNN on raw time series reached accuracy 0.634, AUC 0.705, below the linear models on connectivity: as in the paper, simple models on derived features win on small fMRI data.
 <!-- RESULTS END -->
 
 Figures: `figures/model_comparison.png`, `figures/age_ablation.png`, `figures/confusion_matrix.png`,
