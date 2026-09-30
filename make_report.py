@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.backends.backend_pdf import PdfPages
 
-TEAM = "Team 35: <Member A name, SRN> and <Member B name, SRN>"  # edit before submitting
+TEAM = "Team 35: Ashwin C H (PES1UG24AM900) and Chidivilas Adi (PES1UG24AM802)"
 TITLE = "Classifying Adolescent Excessive Alcohol Drinkers from fMRI Data"
 SUB = "UE24CS352A Machine Learning mini project, PES University. Pipeline demonstrated on ABIDE resting-state fMRI"
 R, OUT = Path("results"), Path("report")
