@@ -1,9 +1,8 @@
-data/
-models/
+# 257 MB (over GitHub's 100 MB limit); rebuilt from data/ABIDE_pcp by download_data.py
+data/timeseries.npy
 __pycache__/
 *.pt
 .ipynb_checkpoints/
 .DS_Store
 *.log
 CLAUDE.md
-/*.pdf
