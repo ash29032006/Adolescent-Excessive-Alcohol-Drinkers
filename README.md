@@ -26,11 +26,16 @@ brew install pandoc                  # optional, only to build slides.pptx
 ## Run
 
 ```bash
-python download_data.py              # ~1 GB download into data/ (once)
+python download_data.py              # builds data/timeseries.npy (raw ABIDE files are already in data/, ~15 s, no download)
 python run_experiments.py            # all experiments -> results/, figures/, models/  (~1 h, tangent is the slow part)
 python make_report.py                # report/writeup.pdf, report/slides.pptx, results table below
 python demo.py                       # live demo, offline, < 2 min
 ```
+
+The repo already contains the ABIDE region time series (`data/ABIDE_pcp/`), labels, phenotype and the trained
+demo model (`models/`), so after `python download_data.py` the demo runs straight away. Only
+`data/timeseries.npy` is not committed (257 MB, over GitHub's file limit); `download_data.py` rebuilds it from the
+included files.
 
 Useful options:
 
@@ -92,7 +97,10 @@ Figures: `figures/model_comparison.png`, `figures/age_ablation.png`, `figures/co
 ## Repository layout
 
 ```
-download_data.py      fetch ABIDE (CPAC, cc200) into data/
+download_data.py      fetch ABIDE (CPAC, cc200) into data/ (uses the included files if present)
+data/                 ABIDE region time series, labels, phenotype
+models/               trained demo model
+docs/                 assignment guidelines and the reference paper
 run_experiments.py    all experiments -> results/*.csv, figures/*.png, models/demo_model.joblib
 make_report.py        write-up PDF, slides, README results from results/
 demo.py               offline live demo
