@@ -1,8 +1,4 @@
-"""Small 1D CNN on the raw region time series (comparison only, like the paper's deep models).
 
-Scans have different lengths per site, so training uses random fixed-length crops and the
-network ends in global average pooling, which lets it score a full scan of any length.
-"""
 import numpy as np
 import torch
 from torch import nn
@@ -11,7 +7,6 @@ SEED = 42
 
 
 class CNN(nn.Module):
-    """200 regions as input channels -> two temporal conv layers -> average over time -> logit."""
 
     def __init__(self, n_regions=200, width=32):
         super().__init__()
@@ -25,12 +20,10 @@ class CNN(nn.Module):
 
 
 def _zscore(t):
-    """Z-score each region over time (as in the paper) and return (regions, time) float32."""
     return ((t - t.mean(0)) / (t.std(0) + 1e-8)).T.astype(np.float32)
 
 
 def cnn_oof_probs(ts, y, splits, crop=64, epochs=40, batch=32):
-    """Train one CNN per fold and return out-of-fold probabilities of class 1."""
     torch.manual_seed(SEED)
     rng = np.random.default_rng(SEED)
     X = [_zscore(t) for t in ts]
